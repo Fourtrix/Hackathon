@@ -10,6 +10,8 @@ export class LocationTracker {
     public lng: number = 0;
     public smokedata: SmokeData;
     public ws: WebSocket;
+    public kindlist: any = [ "담배", "화재" ];
+    public placelist: any = [ "1층복도", "2층화장실", "교실" ];
 
     constructor(public zone: NgZone) {
         this.ws = new WebSocket("ws://ptgetter2.iptime.org:5000");
@@ -29,9 +31,9 @@ export class LocationTracker {
 
     generateSmokeData() {
         this.smokedata = new SmokeData();
-        this.smokedata.kind = "담배";
-        this.smokedata.level = 3;
-        this.smokedata.plcae = "2층화장실";
+        this.smokedata.kind = this.kindlist[this.randomInt(0, this.kindlist.length-1)];
+        this.smokedata.level = this.randomInt(0, 4);
+        this.smokedata.plcae = this.placelist[this.randomInt(0, this.placelist.length-1)];
         console.log('Smoke data' + this.smokedata);
     }
 
